@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Dashboard from "./components/Dashboard";
 import Header from "./components/Layout/Header";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import AddProject from "./components/Project/AddProject";
+import AddProjectForm from "./components/Project/AddProjectForm";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       <div className="App">
         <Header></Header>
         <Route exact path="/dashboard" component={Dashboard} />
-        <Route exact path="/addProject" component={AddProject} />
+        <Route exact path="/addProject" component={AddProjectForm} />
       </div>
     </Router>
   );
