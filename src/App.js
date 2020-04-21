@@ -6,7 +6,7 @@ import Header from "./components/Layout/Header";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import AddProjectForm from "./components/Project/AddProjectForm";
 import { Provider } from "react-redux";
-import store from "./store";
+import store from "./store/configureStore";
 
 function App() {
   return (

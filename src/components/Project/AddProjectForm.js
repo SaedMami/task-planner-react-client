@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { createProject } from "../../actions/ProjectActions";
 
 class AddProjectForm extends Component {
   constructor() {
@@ -30,10 +33,19 @@ class AddProjectForm extends Component {
       endDate: this.state.endDate,
     };
 
-    console.log(newProject);
+    this.props.createProject(newProject, this.props.history);
+  }
+
+  // life cycle hooks
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.render();
+    }
   }
 
   render() {
+    const { errors } = this.props;
+
     return (
       <div className="container">
         <div className="row">
@@ -50,6 +62,7 @@ class AddProjectForm extends Component {
                   value={this.state.name}
                   onChange={this.onChange}
                 />
+                <p>{errors.name}</p>
               </div>
               <div className="form-group">
                 <input
@@ -61,6 +74,7 @@ class AddProjectForm extends Component {
                   onChange={this.onChange}
                 />
               </div>
+              <p>{errors.projectCode}</p>
               <div className="form-group">
                 <textarea
                   className="form-control form-control-lg"
@@ -69,6 +83,7 @@ class AddProjectForm extends Component {
                   value={this.state.description}
                   onChange={this.onChange}
                 ></textarea>
+                <p>{errors.description}</p>
               </div>
               <h6>Start Date</h6>
               <div className="form-group">
@@ -99,4 +114,14 @@ class AddProjectForm extends Component {
   }
 }
 
-export default AddProjectForm;
+AddProjectForm.propTypes = {
+  createProject: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+};
+
+// extract local state from the redux store
+const mapStateToProps = (state) => ({
+  errors: state.errors,
+});
+
+export default connect(mapStateToProps, { createProject })(AddProjectForm);
