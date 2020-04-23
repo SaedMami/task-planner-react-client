@@ -5,6 +5,7 @@ import Dashboard from "./components/Dashboard";
 import Header from "./components/Layout/Header";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import AddProjectForm from "./components/Project/AddProjectForm";
+import UpdateProjectForm from "./components/Project/UpdateProjectForm";
 import { Provider } from "react-redux";
 import store from "./store/configureStore";
 
@@ -16,6 +17,11 @@ function App() {
           <Header />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/addProject" component={AddProjectForm} />
+          <Route
+            exact
+            path="/updateProject/:id"
+            component={UpdateProjectForm}
+          />
         </div>
       </Router>
     </Provider>
