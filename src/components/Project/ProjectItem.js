@@ -12,7 +12,13 @@ class ProjectItem extends Component {
 
   onDeleteProject(e) {
     const { projectCode } = this.props.projectItem;
-    this.props.deleteProjectByCode(projectCode);
+    if (
+      window.confirm(
+        `Are you sure you want to delete project ${projectCode} and all the data assoicated with it?`
+      )
+    ) {
+      this.props.deleteProjectByCode(projectCode);
+    }
   }
 
   render() {
