@@ -20,13 +20,11 @@ export default function (state = initialState, action) {
       };
 
     case DELETE_PROJECT:
-      // payload will have the delete project code, just remove that from the list of all projects
-      const updatedProjects = state.allProjects.filter(
-        (element) => element.projectCode !== action.payload
-      );
       return {
         ...state,
-        allProjects: updatedProjects,
+        allProjects: state.allProjects.filter(
+          (element) => element.projectCode !== action.payload
+        ),
       };
     default:
       return state;
