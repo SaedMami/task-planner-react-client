@@ -1,7 +1,19 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import TaskColumn from "./TaskColumn";
+import { connect } from "react-redux";
+import { getProjectTasks } from "../../actions/ProjectBoardActions";
 
 class Board extends Component {
+  componentDidMount() {
+    const projectCode = this.props.match.params.projectCode;
+    this.props.getProjectTasks(projectCode);
+  }
+
+  componentWillReceiveProps() {
+    this.setState({});
+  }
+
   render() {
     const projectCode = this.props.match.params.projectCode;
     return (
@@ -11,75 +23,32 @@ class Board extends Component {
         </Link>
         <br />
         <hr />
-        {
-          //<!-- Backlog STARTS HERE -->
-        }
 
         <div className="container">
           <div className="row">
-            <div className="col-md-4">
-              <div className="card text-center mb-2">
-                <div className="card-header bg-secondary text-white">
-                  <h3>TO DO</h3>
-                </div>
-              </div>
-
-              {
-                //<!-- SAMPLE PROJECT TASK STARTS HERE -->
-              }
-              <div className="card mb-1 bg-light">
-                <div className="card-header text-primary">
-                  ID: projectSequence -- Priority: priorityString
-                </div>
-                <div className="card-body bg-light">
-                  <h5 className="card-title">project_task.summary</h5>
-                  <p className="card-text text-truncate ">
-                    project_task.acceptanceCriteria
-                  </p>
-                  <a href="#" className="btn btn-primary">
-                    View / Update
-                  </a>
-
-                  <button className="btn btn-danger ml-4">Delete</button>
-                </div>
-              </div>
-
-              {
-                //<!-- SAMPLE PROJECT TASK STARTS HERE -->
-                //<!-- SAMPLE PROJECT TASK ENDS HERE -->
-              }
-            </div>
-            <div className="col-md-4">
-              <div className="card text-center mb-2">
-                <div className="card-header bg-primary text-white">
-                  <h3>In Progress</h3>
-                </div>
-              </div>
-              {
-                //<!-- SAMPLE PROJECT TASK STARTS HERE -->
-                //<!-- SAMPLE PROJECT TASK ENDS HERE -->
-              }
-            </div>
-            <div className="col-md-4">
-              <div className="card text-center mb-2">
-                <div className="card-header bg-success text-white">
-                  <h3>Done</h3>
-                </div>
-              </div>
-              {
-                //<!-- SAMPLE PROJECT TASK STARTS HERE -->
-                //<!-- SAMPLE PROJECT TASK ENDS HERE -->
-              }
-            </div>
+            <TaskColumn
+              columnName="To Do"
+              tasks={this.props.tasks.filter((task) => task.status === "TO_DO")}
+            ></TaskColumn>
+            <TaskColumn
+              columnName="In Progress"
+              tasks={this.props.tasks.filter(
+                (task) => task.status === "IN_PROGRESS"
+              )}
+            ></TaskColumn>
+            <TaskColumn
+              columnName="Done"
+              tasks={this.props.tasks.filter((task) => task.status === "DONE")}
+            ></TaskColumn>
           </div>
         </div>
-
-        {
-          //<!-- Backlog ENDS HERE -->
-        }
       </div>
     );
   }
 }
 
-export default Board;
+const mapStateToProps = (state) => ({
+  tasks: state.backlog.projectTasks,
+});
+
+export default connect(mapStateToProps, { getProjectTasks })(Board);
