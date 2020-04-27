@@ -1,12 +1,14 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
-class ProjectBoard extends Component {
+class Board extends Component {
   render() {
+    const projectCode = this.props.match.params.projectCode;
     return (
       <div className="container">
-        <a href="#" className="btn btn-primary mb-3">
-          <i className="fas fa-plus-circle"> Create Project Task</i>
-        </a>
+        <Link to={`/${projectCode}/addTask`} className="btn btn-primary mb-3">
+          <i className="fa fa-plus-circle"> Create Project Task</i>
+        </Link>
         <br />
         <hr />
         {
@@ -80,4 +82,4 @@ class ProjectBoard extends Component {
   }
 }
 
-export default ProjectBoard;
+export default Board;

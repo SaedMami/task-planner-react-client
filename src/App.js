@@ -6,9 +6,10 @@ import Header from "./components/Layout/Header";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import AddProjectForm from "./components/Project/AddProjectForm";
 import UpdateProjectForm from "./components/Project/UpdateProjectForm";
-import ProjectBoard from "./components/ProjectBoard/ProjectBoard";
+import Board from "./components/ProjectBoard/Board";
 import { Provider } from "react-redux";
 import store from "./store/configureStore";
+import AddTaskForm from "./components/ProjectBoard/Tasks/AddProjectTaskForm";
 
 function App() {
   return (
@@ -23,10 +24,12 @@ function App() {
             path="/updateProject/:id"
             component={UpdateProjectForm}
           />
+          <Route exact path="/:projectCode/board" component={Board}></Route>
+
           <Route
             exact
-            path="/board/:projectCode"
-            component={ProjectBoard}
+            path="/:projectCode/addTask"
+            component={AddTaskForm}
           ></Route>
         </div>
       </Router>
