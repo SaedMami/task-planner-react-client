@@ -7,10 +7,9 @@ import PropTypes from "prop-types";
 class ProjectItem extends Component {
   constructor() {
     super();
-    this.onDeleteProject = this.onDeleteProject.bind(this);
   }
 
-  onDeleteProject(e) {
+  onDeleteProject = (e) => {
     const { projectCode } = this.props.projectItem;
     if (
       window.confirm(
@@ -19,7 +18,7 @@ class ProjectItem extends Component {
     ) {
       this.props.deleteProjectByCode(projectCode);
     }
-  }
+  };
 
   render() {
     const { name, description, projectCode } = this.props.projectItem;
