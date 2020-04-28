@@ -5,14 +5,12 @@ import { connect } from "react-redux";
 import { getProjectTasks } from "../../actions/ProjectBoardActions";
 
 class Board extends Component {
-  componentDidMount() {
+  componentWillMount() {
     const projectCode = this.props.match.params.projectCode;
     this.props.getProjectTasks(projectCode);
   }
 
-  render() {
-    const projectCode = this.props.match.params.projectCode;
-    const tasks = this.props.tasks.sort((t1, t2) => t1.priority - t2.priority);
+  renderBoard = (tasks, projectCode) => {
     return (
       <div className="container">
         <Link to={`/${projectCode}/addTask`} className="btn btn-primary mb-3">
@@ -39,11 +37,33 @@ class Board extends Component {
         </div>
       </div>
     );
+  };
+
+  render() {
+    const projectCode = this.props.match.params.projectCode;
+    const tasks = this.props.tasks.sort((t1, t2) => t1.priority - t2.priority);
+
+    if (Object.keys(this.props.errors).length !== 0) {
+      return (
+        <div className="alert alert-danger text-center">
+          {this.props.errors.projectCode}
+        </div>
+      );
+    } else if (tasks.length === 0) {
+      return (
+        <div className="alert alert-info text-center">
+          {`No tasks found for project: ${projectCode}`}
+        </div>
+      );
+    } else {
+      return this.renderBoard(tasks, projectCode);
+    }
   }
 }
 
 const mapStateToProps = (state) => ({
   tasks: state.backlog.projectTasks,
+  errors: state.errors,
 });
 
 export default connect(mapStateToProps, { getProjectTasks })(Board);
