@@ -10,12 +10,9 @@ class Board extends Component {
     this.props.getProjectTasks(projectCode);
   }
 
-  componentWillReceiveProps() {
-    this.setState({});
-  }
-
   render() {
     const projectCode = this.props.match.params.projectCode;
+    const tasks = this.props.tasks.sort((t1, t2) => t1.priority - t2.priority);
     return (
       <div className="container">
         <Link to={`/${projectCode}/addTask`} className="btn btn-primary mb-3">
@@ -28,17 +25,15 @@ class Board extends Component {
           <div className="row">
             <TaskColumn
               columnName="To Do"
-              tasks={this.props.tasks.filter((task) => task.status === "TO_DO")}
+              tasks={tasks.filter((task) => task.status === "TO_DO")}
             ></TaskColumn>
             <TaskColumn
               columnName="In Progress"
-              tasks={this.props.tasks.filter(
-                (task) => task.status === "IN_PROGRESS"
-              )}
+              tasks={tasks.filter((task) => task.status === "IN_PROGRESS")}
             ></TaskColumn>
             <TaskColumn
               columnName="Done"
-              tasks={this.props.tasks.filter((task) => task.status === "DONE")}
+              tasks={tasks.filter((task) => task.status === "DONE")}
             ></TaskColumn>
           </div>
         </div>

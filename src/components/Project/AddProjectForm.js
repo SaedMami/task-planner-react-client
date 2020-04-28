@@ -34,13 +34,6 @@ class AddProjectForm extends Component {
     this.props.createProject(newProject, this.props.history);
   };
 
-  // life cycle hooks
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.render();
-    }
-  }
-
   render() {
     const { errors } = this.props;
 

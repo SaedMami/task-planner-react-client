@@ -1,6 +1,7 @@
 import React from "react";
 import { createTask } from "../../../actions/ProjectBoardActions";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import classnames from "classnames";
 
 class AddProjectTaskForm extends React.Component {
@@ -33,9 +34,9 @@ class AddProjectTaskForm extends React.Component {
       <div className="container">
         <div className="row">
           <div className="col-md-8 m-auto">
-            <a href={`/${projectCode}/board`} className="btn btn-light">
+            <Link to={`/${projectCode}/board`} className="btn btn-light">
               Back to Project Board
-            </a>
+            </Link>
             <h4 className="display-4 text-center">Add New Project Task</h4>
             <h3 className="lead text-center">{`Project: ${projectCode}`}</h3>
             <form onSubmit={this.onSubmit}>
@@ -110,8 +111,8 @@ class AddProjectTaskForm extends React.Component {
   };
 }
 
-const mapStateToPros = (state) => ({
+const mapStateToProps = (state) => ({
   errors: state.errors,
 });
 
-export default connect(mapStateToPros, { createTask })(AddProjectTaskForm);
+export default connect(mapStateToProps, { createTask })(AddProjectTaskForm);

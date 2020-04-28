@@ -19,6 +19,7 @@ export const getProjects = () => async (dispatch) => {
     const res = await axios.get("/api/project");
     const action = { type: GET_PROJECTS, payload: res.data };
     dispatch(action);
+    dispatch({ type: GET_ERRORS, payload: {} });
   } catch (error) {}
 };
 

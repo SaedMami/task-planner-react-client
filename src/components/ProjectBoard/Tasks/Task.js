@@ -1,17 +1,25 @@
 import React, { Component } from "react";
+import classnames from "classnames";
 
-const priority = {
+const priorityStrings = {
   1: "High",
-  2: "Low",
-  3: "Medium",
+  2: "Medium",
+  3: "Low",
 };
 
 class Task extends Component {
   render() {
+    const { priority } = this.props.task;
     return (
       <div className="card mb-1 bg-light">
-        <div className="card-header text-primary">
-          Priority: {priority[this.props.task.priority]}
+        <div
+          className={classnames("card-header text-primary", {
+            "bg-danger text-light": priority === 3,
+            "bg-warning text-light": priority === 2,
+            "bg-info text-light": priority === 1,
+          })}
+        >
+          Priority: {priorityStrings[this.props.task.priority]}
         </div>
         <div className="card-body bg-light">
           <h5 className="card-title">{this.props.task.summary}</h5>

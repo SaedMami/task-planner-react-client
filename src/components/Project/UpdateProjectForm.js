@@ -37,13 +37,7 @@ class UpdateProjectFrom extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.project) {
-      this.setState(nextProps.project);
-    }
-
-    if (nextProps.errors) {
-      this.render();
-    }
+    this.setState(nextProps.project);
   }
 
   render() {
