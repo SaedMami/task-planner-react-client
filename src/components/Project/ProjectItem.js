@@ -5,10 +5,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 class ProjectItem extends Component {
-  constructor() {
-    super();
-  }
-
   onDeleteProject = (e) => {
     const { projectCode } = this.props.projectItem;
     if (

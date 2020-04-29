@@ -24,9 +24,12 @@ export default function (previousState = initialState, action) {
       };
 
     case DELETE_PROJECT_TASK:
+      const newProjectTasks = previousState.projectTasks.filter(
+        (t) => t.projectSequence !== action.payload.projectSequence
+      );
       return {
         ...previousState,
-        // TODO
+        projectTasks: newProjectTasks,
       };
 
     default:

@@ -10,6 +10,7 @@ import Board from "./components/ProjectBoard/Board";
 import { Provider } from "react-redux";
 import store from "./store/configureStore";
 import AddTaskForm from "./components/ProjectBoard/Tasks/AddProjectTaskForm";
+import UpdateTaskForm from "./components/ProjectBoard/Tasks/UpdateTaskForm";
 
 function App() {
   return (
@@ -30,6 +31,12 @@ function App() {
             exact
             path="/:projectCode/addTask"
             component={AddTaskForm}
+          ></Route>
+
+          <Route
+            exact
+            path="/:projectCode/:projectSequence/update"
+            component={UpdateTaskForm}
           ></Route>
         </div>
       </Router>

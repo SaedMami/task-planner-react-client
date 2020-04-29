@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import classnames from "classnames";
+import { Link } from "react-router-dom";
+import { deleteTask } from "../../../actions/ProjectBoardActions";
+import { connect } from "react-redux";
 
 const priorityStrings = {
   1: "High",
@@ -9,14 +12,14 @@ const priorityStrings = {
 
 class Task extends Component {
   render() {
-    const { priority } = this.props.task;
+    const { priority, projectCode, projectSequence } = this.props.task;
     return (
       <div className="card mb-1 bg-light">
         <div
           className={classnames("card-header text-primary", {
-            "bg-danger text-light": priority === 3,
+            "bg-danger text-light": priority === 1,
             "bg-warning text-light": priority === 2,
-            "bg-info text-light": priority === 1,
+            "bg-info text-light": priority === 3,
           })}
         >
           Priority: {priorityStrings[this.props.task.priority]}
@@ -26,15 +29,23 @@ class Task extends Component {
           <p className="card-text text-truncate ">
             {this.props.task.acceptanceCriteria}
           </p>
-          <a href="#" className="btn btn-primary">
+          <Link
+            to={`/${projectCode}/${projectSequence}/update`}
+            className="btn btn-primary"
+          >
             View / Update
-          </a>
+          </Link>
 
-          <button className="btn btn-danger ml-4">Delete</button>
+          <button
+            onClick={() => this.props.deleteTask(this.props.task)}
+            className="btn btn-danger ml-4"
+          >
+            Delete
+          </button>
         </div>
       </div>
     );
   }
 }
 
-export default Task;
+export default connect(null, { deleteTask })(Task);
