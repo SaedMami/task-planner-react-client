@@ -18,7 +18,7 @@ class UpdateTaskForm extends React.Component {
 
   componentWillMount() {
     const { projectCode, projectSequence } = this.props.match.params;
-    this.props.getTask(projectCode, projectSequence);
+    this.props.getTask(projectCode, projectSequence, this.props.history);
   }
 
   componentWillReceiveProps(nextProps) {

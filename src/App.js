@@ -11,6 +11,9 @@ import { Provider } from "react-redux";
 import store from "./store/configureStore";
 import AddTaskForm from "./components/ProjectBoard/Tasks/AddProjectTaskForm";
 import UpdateTaskForm from "./components/ProjectBoard/Tasks/UpdateTaskForm";
+import Landing from "./components/Layout/Landing";
+import Register from "./components/user_manegement/Register";
+import Login from "./components/user_manegement/Login";
 
 function App() {
   return (
@@ -18,6 +21,16 @@ function App() {
       <Router>
         <div className="App">
           <Header />
+          {
+            // public routes
+          }
+          <Route exact path="/" component={Landing} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/login" component={Login} />
+
+          {
+            // private routes
+          }
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/addProject" component={AddProjectForm} />
           <Route

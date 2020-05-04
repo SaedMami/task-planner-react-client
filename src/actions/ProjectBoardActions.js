@@ -41,9 +41,15 @@ export const updateTask = (projectCode, taskSequence, task, history) => async (
   }
 };
 
-export const getTask = (projectCode, taskSequence) => async (dispatch) => {
-  const res = await axios.get(`/api/backlog/${projectCode}/${taskSequence}`);
-  dispatch({ type: GET_PROJECT_TASK, payload: res.data });
+export const getTask = (projectCode, taskSequence, history) => async (
+  dispatch
+) => {
+  try {
+    const res = await axios.get(`/api/backlog/${projectCode}/${taskSequence}`);
+    dispatch({ type: GET_PROJECT_TASK, payload: res.data });
+  } catch (error) {
+    history.push(`/${projectCode}/board/`);
+  }
 };
 
 export const deleteTask = (task) => async (dispatch) => {
