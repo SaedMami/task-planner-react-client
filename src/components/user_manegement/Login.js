@@ -21,6 +21,12 @@ class Login extends Component {
     this.props.loginUser(this.state, this.props.history);
   };
 
+  componentDidMount = () => {
+    if (this.props.security.validToken) {
+      this.props.history.push("/dashboard");
+    }
+  };
+
   render() {
     const { errors } = this.props;
     return (
@@ -70,6 +76,7 @@ class Login extends Component {
 
 const mapStateToProps = (state) => ({
   errors: state.errors,
+  security: state.security,
 });
 
 export default connect(mapStateToProps, { loginUser })(Login);

@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 class Landing extends Component {
+  componentDidMount = () => {
+    if (this.props.security.validToken) {
+      this.props.history.push("/dashboard");
+    }
+  };
+
   render() {
     return (
       <div>
@@ -29,4 +36,6 @@ class Landing extends Component {
   }
 }
 
-export default Landing;
+const mapStateToProps = (state) => ({ security: state.security });
+
+export default connect(mapStateToProps)(Landing);

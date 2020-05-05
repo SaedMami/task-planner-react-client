@@ -3,7 +3,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Dashboard from "./components/Dashboard";
 import Header from "./components/Layout/Header";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AddProjectForm from "./components/Project/AddProjectForm";
 import UpdateProjectForm from "./components/Project/UpdateProjectForm";
 import Board from "./components/ProjectBoard/Board";
@@ -18,6 +18,7 @@ import jwt_decode from "jwt-decode";
 import { setTokenInHeader } from "./securityUtils/setTokenInHeader";
 import { SET_CURRENT_USER } from "./actions/types";
 import { logout } from "./actions/SecurityActions";
+import SecureRoute from "./securityUtils/SecureRoute";
 
 const jwtToken = localStorage.jwtToken;
 
@@ -49,26 +50,33 @@ function App() {
           {
             // private routes
           }
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/addProject" component={AddProjectForm} />
-          <Route
-            exact
-            path="/updateProject/:id"
-            component={UpdateProjectForm}
-          />
-          <Route exact path="/:projectCode/board" component={Board}></Route>
 
-          <Route
-            exact
-            path="/:projectCode/addTask"
-            component={AddTaskForm}
-          ></Route>
+          <Switch>
+            <SecureRoute exact path="/dashboard" component={Dashboard} />
+            <SecureRoute exact path="/addProject" component={AddProjectForm} />
+            <SecureRoute
+              exact
+              path="/updateProject/:id"
+              component={UpdateProjectForm}
+            />
+            <SecureRoute
+              exact
+              path="/:projectCode/board"
+              component={Board}
+            ></SecureRoute>
 
-          <Route
-            exact
-            path="/:projectCode/:projectSequence/update"
-            component={UpdateTaskForm}
-          ></Route>
+            <SecureRoute
+              exact
+              path="/:projectCode/addTask"
+              component={AddTaskForm}
+            ></SecureRoute>
+
+            <SecureRoute
+              exact
+              path="/:projectCode/:projectSequence/update"
+              component={UpdateTaskForm}
+            ></SecureRoute>
+          </Switch>
         </div>
       </Router>
     </Provider>

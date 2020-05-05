@@ -18,6 +18,12 @@ class Register extends Component {
     this.props.clearErrors();
   }
 
+  componentDidMount = () => {
+    if (this.props.security.validToken) {
+      this.props.history.push("/dashboard");
+    }
+  };
+
   onSubmit = (e) => {
     e.preventDefault();
     this.props.createNewUser(this.state, this.props.history);
@@ -92,6 +98,7 @@ class Register extends Component {
 
 const mapStateToProps = (state) => ({
   errors: state.errors,
+  security: state.security,
 });
 
 const clearErrors = () => (dispatch) => {
