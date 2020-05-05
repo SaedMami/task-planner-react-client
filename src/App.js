@@ -14,6 +14,23 @@ import UpdateTaskForm from "./components/ProjectBoard/Tasks/UpdateTaskForm";
 import Landing from "./components/Layout/Landing";
 import Register from "./components/user_manegement/Register";
 import Login from "./components/user_manegement/Login";
+import jwt_decode from "jwt-decode";
+import { setTokenInHeader } from "./securityUtils/setTokenInHeader";
+import { SET_CURRENT_USER } from "./actions/types";
+
+const jwtToken = localStorage.jwtToken;
+
+if (jwtToken) {
+  setTokenInHeader(jwtToken);
+  const decoded = jwt_decode(jwtToken);
+  store.dispatch({ type: SET_CURRENT_USER, payload: decoded });
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+    console.log("token expired");
+    delete localStorage.jwtToken;
+    window.location.href = "/";
+  }
+}
 
 function App() {
   return (
