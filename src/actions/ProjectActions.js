@@ -15,10 +15,15 @@ export const createProject = (project, history) => async (dispatch) => {
 };
 
 export const getProjects = () => (dispatch) => {
-  axios.get("/api/project").then((res) => {
-    dispatch({ type: GET_PROJECTS, payload: res.data });
-    dispatch({ type: GET_ERRORS, payload: {} });
-  });
+  axios
+    .get("/api/project")
+    .then((res) => {
+      dispatch({ type: GET_PROJECTS, payload: res.data });
+      dispatch({ type: GET_ERRORS, payload: {} });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 export const getProjectByCode = (projectCode, history) => async (dispatch) => {

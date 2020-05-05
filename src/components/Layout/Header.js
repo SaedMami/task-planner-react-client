@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { logout } from "../../actions/SecurityActions";
 
 class Header extends Component {
   render() {
+    const { validToken } = this.props.security;
+    const { fullName } = this.props.security.currentUser;
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
         <div className="container">
           <Link className="navbar-brand" to="/dashboard">
-            Personal Project Management Tool
+            Task Planner Tool
           </Link>
           <button
             className="navbar-toggler"
@@ -18,25 +22,53 @@ class Header extends Component {
             <span className="navbar-toggler-icon" />
           </button>
 
-          <div className="collapse navbar-collapse" id="mobile-nav">
-            <ul className="navbar-nav mr-auto">
+          <div
+            className="collapse navbar-collapse d-flex flex-row justify-content-between"
+            id="mobile-nav"
+          >
+            <ul className="navbar-nav">
               <li className="nav-item">
-                <Link className="nav-link" to="/dashboard">
-                  Dashboard
-                </Link>
+                {validToken && (
+                  <Link className="nav-link" to="/dashboard">
+                    Dashboard
+                  </Link>
+                )}
               </li>
             </ul>
 
-            <ul className="navbar-nav ml-auto">
+            <ul className="navbar-nav">
+              {!validToken && (
+                <li className="nav-item">
+                  <Link className="nav-link " to="/register">
+                    Sign Up
+                  </Link>
+                </li>
+              )}
+              {!validToken && (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login">
+                    Login
+                  </Link>
+                </li>
+              )}
+
+              {validToken && (
+                <li className="nav-item">
+                  <span className="navbar-text">
+                    <i className="fa fa-user-circle mr-1"></i>
+                    {fullName}
+                  </span>
+                </li>
+              )}
               <li className="nav-item">
-                <Link className="nav-link " to="/register">
-                  Sign Up
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/login">
-                  Login
-                </Link>
+                {validToken && (
+                  <a
+                    onClick={(e) => this.props.logout(this.props.history)}
+                    className="nav-link"
+                  >
+                    Logout
+                  </a>
+                )}
               </li>
             </ul>
           </div>
@@ -46,4 +78,8 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const mapStateToProps = (state) => ({
+  security: state.security,
+});
+
+export default connect(mapStateToProps, { logout })(Header);

@@ -17,6 +17,7 @@ import Login from "./components/user_manegement/Login";
 import jwt_decode from "jwt-decode";
 import { setTokenInHeader } from "./securityUtils/setTokenInHeader";
 import { SET_CURRENT_USER } from "./actions/types";
+import { logout } from "./actions/SecurityActions";
 
 const jwtToken = localStorage.jwtToken;
 
@@ -26,8 +27,7 @@ if (jwtToken) {
   store.dispatch({ type: SET_CURRENT_USER, payload: decoded });
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
-    console.log("token expired");
-    delete localStorage.jwtToken;
+    store.dispatch(logout());
     window.location.href = "/";
   }
 }
@@ -37,7 +37,8 @@ function App() {
     <Provider store={store}>
       <Router>
         <div className="App">
-          <Header />
+          <Route component={Header}></Route>
+
           {
             // public routes
           }

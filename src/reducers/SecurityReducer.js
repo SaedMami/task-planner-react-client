@@ -10,7 +10,7 @@ export default function (state = initialState, action) {
     case SET_CURRENT_USER: {
       return {
         ...state,
-        validToken: action.payload ? true : false,
+        validToken: Object.keys(action.payload).length === 0 ? false : true,
         currentUser: action.payload,
       };
     }
