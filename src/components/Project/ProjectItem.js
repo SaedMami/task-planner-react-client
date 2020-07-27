@@ -29,7 +29,7 @@ class ProjectItem extends Component {
               <h3>{name}</h3>
               <p>{description}</p>
             </div>
-            <div className="col-md-4 d-none d-lg-block">
+            <div className="col-md-4 d-lg-block">
               <ul className="list-group">
                 <Link to={`/${projectCode}/board`}>
                   <li className="list-group-item board">

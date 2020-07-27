@@ -72,7 +72,9 @@ const ZeroTasks = (props) => {
 
 const renderErrors = (errors) => {
   return (
-    <div className="alert alert-danger text-center">{errors.projectCode}</div>
+    <div className="alert alert-danger text-center">
+      {errors.projectCode || errors.username}
+    </div>
   );
 };
 
